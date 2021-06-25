@@ -5,28 +5,31 @@
 # Contributor: Dieter Plaetinck <dieter@plaetinck.be>
 
 pkgname=vcsh
-pkgver=1.20190621
+pkgver=2.0.0beta1
+_pkgver=2.0.0-beta.1
 pkgrel=1
 pkgdesc='Version Control System for $HOME that manages multiple Git repositories'
 arch=(any)
 url="https://github.com/RichiH/$pkgname"
 license=(GPL2)
 depends=(git)
+makedepends=(ruby-ronn)
 checkdepends=(perl perl-shell-command perl-test-most)
-source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha256sums=('e7c108f98da16e5ec5ae41692552aff31ee02d7d8849e6bf6efdfa68ed697204')
+source=("$url/releases/download/v$_pkgver/vcsh-$_pkgver.tar.xz")
+sha256sums=('dd766715b6d525509f7bc11d861771cacad29e9661f7b4d0ae5c8a825a35281a')
 
 build() {
-    cd "$pkgname-$pkgver"
-    make all=''
+	cd "$pkgname-$_pkgver"
+	./configure --prefix /usr
+	make
 }
 
 check() {
-    cd "$pkgname-$pkgver"
-    make test
+	cd "$pkgname-$_pkgver"
+	make test
 }
 
 package() {
-    cd "$pkgname-$pkgver"
-    make DESTDIR="$pkgdir/" ZSHDIR='$(PREFIX)/share/zsh/site-functions' all='' install
+	cd "$pkgname-$_pkgver"
+	make DESTDIR="$pkgdir/" install
 }
