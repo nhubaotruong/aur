@@ -7,7 +7,7 @@
 pkgname=vcsh
 pkgver=2.0.0beta1
 _pkgver=2.0.0-beta.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Version Control System for $HOME that manages multiple Git repositories'
 arch=(any)
 url="https://github.com/RichiH/$pkgname"
@@ -20,7 +20,9 @@ sha256sums=('dd766715b6d525509f7bc11d861771cacad29e9661f7b4d0ae5c8a825a35281a')
 
 build() {
 	cd "$pkgname-$_pkgver"
-	./configure --prefix /usr
+	./configure \
+		--prefix="/usr" \
+		--with-deployment="arch.$pkgrel"
 	make
 }
 
